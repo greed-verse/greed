@@ -1,18 +1,35 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function Home() {
+export default function Landing() {
   const router = useRouter();
 
-  const goToHome = () => {
-    router.push("/app/(tabs)/home/index.tsx");
-  };
-
   return (
-    <button
-      onClick={goToHome}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-    >
-      Go to Home
-    </button>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/(tabs)/home")}
+      >
+        <Text style={styles.buttonText}>Go to Home</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#007AFF",
+    padding: 15,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});

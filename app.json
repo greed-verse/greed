@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ParksApp",
-    "slug": "ParksApp",
+    "name": "GREED",
+    "slug": "GREED",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "parksapp",
+    "scheme": "GREED",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
