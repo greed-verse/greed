@@ -20,8 +20,8 @@ export default function TabsLayout() {
           <BottomNavigation.Bar
             navigationState={state}
             safeAreaInsets={insets}
-            inactiveColor="gray"
-            activeColor="blue"
+            inactiveColor="#BE7EFE" // lightest shade
+            activeColor="#9B38FD" // main shade
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
                 type: "tabPress",
@@ -70,13 +70,13 @@ export default function TabsLayout() {
           }}
         />
         <Tab.Screen
-          name="Explore"
+          name="Play"
           component={ExploreScreen}
           options={{
-            tabBarLabel: "Explore",
+            tabBarLabel: "Play",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="map-search"
+                name="gamepad-variant"
                 color={color}
                 size={26}
               />
