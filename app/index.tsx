@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { View } from "react-native";
+import { Button } from "react-native-paper";
 
 export default function OnboardingScreen() {
   const router = useRouter();
@@ -12,6 +13,14 @@ export default function OnboardingScreen() {
         alignItems: "center",
         padding: 24,
       }}
-    ></View>
+    >
+      <Button
+        mode="contained"
+        onPress={() => router.replace("/(tabs)/home")}
+        buttonColor="blue"
+      >
+        Get Started
+      </Button>
+    </View>
   );
 }
