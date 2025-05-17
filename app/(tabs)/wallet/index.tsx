@@ -112,7 +112,6 @@ export default function WalletScreen() {
           <Text style={styles.balanceValue}>${balance.toLocaleString()}</Text>
         </Surface>
 
-        {/* Quick Actions */}
         <View style={styles.quickActions}>
           <TouchableOpacity style={styles.actionBtn}>
             <MaterialCommunityIcons
@@ -140,7 +139,6 @@ export default function WalletScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Recent Transactions */}
         <Surface style={styles.transactionsCard}>
           <Text style={styles.sectionTitle}>Recent Activity</Text>
           {recentTransactions.map((tx) => (
@@ -167,7 +165,6 @@ export default function WalletScreen() {
           ))}
         </Surface>
 
-        {/* Add Funds Modal */}
         <Modal
           visible={modalVisible}
           animationType="slide"
@@ -176,12 +173,10 @@ export default function WalletScreen() {
         >
           <View style={styles.modalOverlay}>
             <SafeAreaView style={styles.modalContainer}>
-              {/* Close Button */}
               <TouchableOpacity style={styles.closeBtn} onPress={closeModal}>
                 <Ionicons name="close" size={28} color="#fff" />
               </TouchableOpacity>
 
-              {/* Balance (disabled) */}
               <View style={styles.balanceTag}>
                 <MaterialCommunityIcons
                   name="wallet-outline"
@@ -191,10 +186,8 @@ export default function WalletScreen() {
                 <Text style={styles.balanceTagText}>Balance: ${balance}</Text>
               </View>
 
-              {/* Amount */}
               <Text style={styles.modalAmount}>${amount}</Text>
 
-              {/* Apple Pay Button (fake) */}
               <TouchableOpacity style={styles.applePayBtn}>
                 <Ionicons name="logo-apple" size={22} color="#fff" />
                 <Text style={styles.applePayBtnText}>Apple Pay</Text>
@@ -206,7 +199,6 @@ export default function WalletScreen() {
                 />
               </TouchableOpacity>
 
-              {/* Preset Amounts */}
               <View style={styles.presetRow}>
                 {presetAmounts.map((val) => (
                   <TouchableOpacity
