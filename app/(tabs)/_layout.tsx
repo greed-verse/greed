@@ -29,8 +29,6 @@ export default function TabsLayout() {
                 onSurfaceVariant: "#36F1CD40", // Ripple/highlight color with opacity
               },
             }}
-            inactiveColor="#BE7EFE"
-            activeColor="#9B38FD"
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
                 type: "tabPress",
