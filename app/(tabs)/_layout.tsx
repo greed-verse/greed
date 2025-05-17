@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CommonActions } from "@react-navigation/native";
 import { BottomNavigation, Provider } from "react-native-paper";
 
-import ExploreScreen from "./explore";
 import HomeScreen from "./home";
+import ExploreScreen from "./play";
 import ProfileScreen from "./profile";
 
 const Tab = createBottomTabNavigator();
