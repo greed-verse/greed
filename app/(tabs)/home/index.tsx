@@ -1,5 +1,8 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
+
+import { useRouter } from "expo-router";
+
 import {
   ScrollView,
   StatusBar,
@@ -10,13 +13,12 @@ import {
 } from "react-native";
 import { ProgressBar, Surface } from "react-native-paper";
 
-// Define theme colors
 const theme = {
   dark: "#0F0F13",
   surface: "#1A1A22",
-  accent: "#36F1CD", // Primary green (more teal, modern)
-  accentLight: "#36F1CD40", // Light teal with opacity
-  accentBright: "#36F1CD", // Bright teal for highlights
+  accent: "#36F1CD",
+  accentLight: "#36F1CD40",
+  accentBright: "#36F1CD",
   text: "#FFFFFF",
   textSecondary: "#A0A0B2",
   cardBackground: "#1E1E28",
@@ -27,7 +29,6 @@ const theme = {
   purple: "#7B5EA7",
 };
 
-// Mock data for achievements
 type Achievement = {
   id: string;
   title: string;
@@ -66,12 +67,12 @@ const achievements: Achievement[] = [
 export default function HomeScreen() {
   const [balance, setBalance] = useState(5280);
 
-  // Mock function to join a random lobby
+  const router = useRouter();
+
   const quickPlay = () => {
     console.log("Quick play pressed");
   };
 
-  // Mock function to create a new lobby
   const createLobby = () => {
     console.log("Create lobby pressed");
   };
@@ -80,13 +81,15 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={theme.dark} />
 
-      {/* Header with wallet info */}
       <View style={styles.headerContainer}>
         <View style={styles.walletHeader}>
           <View>
             <Text style={styles.playerName}>Player One</Text>
           </View>
-          <TouchableOpacity style={styles.walletCard}>
+          <TouchableOpacity
+            style={styles.walletCard}
+            onPress={() => router.push("/(tabs)/wallet")}
+          >
             <MaterialCommunityIcons
               name="wallet-outline"
               size={18}
@@ -103,7 +106,6 @@ export default function HomeScreen() {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Balance card */}
         <Surface style={styles.balanceCard}>
           <View style={styles.balanceRow}>
             <View>
@@ -118,7 +120,6 @@ export default function HomeScreen() {
           </View>
         </Surface>
 
-        {/* Quick actions */}
         <View style={styles.quickActions}>
           <TouchableOpacity style={styles.actionButton} onPress={quickPlay}>
             <View style={styles.actionButtonInner}>
@@ -166,7 +167,6 @@ export default function HomeScreen() {
           </View>
         </Surface>
 
-        {/* Recent Activity */}
         <Surface style={styles.recentActivityCard}>
           <Text style={styles.cardTitle}>Recent Activity</Text>
           <View style={styles.activityItem}>
@@ -209,7 +209,6 @@ export default function HomeScreen() {
           </View>
         </Surface>
 
-        {/* Achievements */}
         <Surface style={styles.achievementsCard}>
           <View style={styles.achievementsHeader}>
             <Text style={styles.cardTitle}>Achievements</Text>
@@ -263,7 +262,6 @@ export default function HomeScreen() {
           ))}
         </Surface>
 
-        {/* Space at the bottom for tab navigation */}
         <View style={{ height: 90 }} />
       </ScrollView>
     </View>
