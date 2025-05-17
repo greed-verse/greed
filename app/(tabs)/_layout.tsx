@@ -20,8 +20,8 @@ export default function TabsLayout() {
           <BottomNavigation.Bar
             navigationState={state}
             safeAreaInsets={insets}
-            inactiveColor="#BE7EFE" // lightest shade
-            activeColor="#9B38FD" // main shade
+            inactiveColor="#BE7EFE"
+            activeColor="#9B38FD"
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
                 type: "tabPress",
