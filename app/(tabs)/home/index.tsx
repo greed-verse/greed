@@ -1,5 +1,7 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
+
 import {
   ScrollView,
   StatusBar,
@@ -64,6 +66,7 @@ const achievements: Achievement[] = [
 ];
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [balance, setBalance] = useState(5280);
 
   // Mock function to join a random lobby
@@ -112,7 +115,10 @@ export default function HomeScreen() {
                 ${balance.toLocaleString()}
               </Text>
             </View>
-            <TouchableOpacity style={styles.topUpButton}>
+            <TouchableOpacity
+              style={styles.topUpButton}
+              onPress={() => router.push("/auth/login")}
+            >
               <Text style={styles.topUpText}>Top Up</Text>
             </TouchableOpacity>
           </View>

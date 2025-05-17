@@ -4,7 +4,7 @@ export default function Home() {
   const router = useRouter();
 
   const goToHome = () => {
-    router.push("/app/(tabs)/home/index.tsx");
+    router.push("/(tabs)/home/index");
   };
 
   return (
