@@ -1,6 +1,8 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -11,9 +13,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Button, Surface, TextInput } from "react-native-paper";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Button, Surface, TextInput } from "react-native-paper";
 
 // Define theme colors to match existing app
 const theme = {
@@ -68,6 +70,8 @@ export default function LoginScreen({
     setSecureTextEntry(!secureTextEntry);
   };
 
+  const router = useRouter();
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -79,15 +83,12 @@ export default function LoginScreen({
 
           {/* Logo and App Name */}
           <View style={styles.logoContainer}>
-            <View style={styles.logoCircle}>
-              <MaterialCommunityIcons
-                name="gamepad-variant"
-                size={48}
-                color={theme.accent}
-              />
-            </View>
-            <Text style={styles.appName}>GameConnect</Text>
-            <Text style={styles.tagline}>Connect. Play. Win.</Text>
+            <Image
+              source={require("../../../assets/images/BlueClearLogo.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            <Text style={styles.appName}>Greed</Text>
           </View>
 
           {/* Login Form */}
@@ -154,7 +155,7 @@ export default function LoginScreen({
 
             <Button
               mode="contained"
-              onPress={handleLogin}
+              onPress={() => router.push("/(tabs)/home")}
               style={styles.loginButton}
               contentStyle={styles.loginButtonContent}
               loading={loading}
@@ -220,17 +221,12 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: "center",
-    marginTop: 60,
-    marginBottom: 40,
+    marginTop: 15,
+    marginBottom: 15,
   },
-  logoCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: theme.accentLight,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
+  logo: {
+    width: 175,
+    height: 175,
   },
   appName: {
     color: theme.text,

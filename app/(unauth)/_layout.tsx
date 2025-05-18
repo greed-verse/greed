@@ -5,8 +5,8 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { PaperProvider } from "react-native-paper";
 import { useColorScheme } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -19,7 +19,7 @@ export default function RootLayout() {
           <Stack.Screen name="(unauth)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style="auto" />
+        <StatusBar hidden={true} />
       </ThemeProvider>
     </PaperProvider>
   );

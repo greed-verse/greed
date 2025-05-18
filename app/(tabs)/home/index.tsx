@@ -2,7 +2,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
 import {
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -78,8 +77,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={theme.dark} />
-
       {/* Header with wallet info */}
       <View style={styles.headerContainer}>
         <View style={styles.walletHeader}>
