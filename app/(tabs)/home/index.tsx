@@ -114,7 +114,12 @@ export default function HomeScreen() {
               </Text>
             </View>
             <TouchableOpacity style={styles.topUpButton}>
-              <Text style={styles.topUpText}>Top Up</Text>
+              <Text
+                onPress={() => router.push("/(unauth)/login")}
+                style={styles.topUpText}
+              >
+                Top Up
+              </Text>
             </TouchableOpacity>
           </View>
         </Surface>
