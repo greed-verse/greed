@@ -1,9 +1,11 @@
-import { Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { Text, TouchableOpacity } from "react-native";
 
 export default function ProfileScreen() {
+  const router = useRouter();
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 24 }}>Profile Screen</Text>
-    </View>
+    <TouchableOpacity onPress={() => router.push("/(unauth)/login")}>
+      <Text>Go to Home</Text>
+    </TouchableOpacity>
   );
 }

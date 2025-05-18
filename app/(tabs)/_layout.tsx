@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CommonActions } from "@react-navigation/native";
 import { BottomNavigation, Provider } from "react-native-paper";
 
-import ExploreScreen from "./explore";
 import HomeScreen from "./home";
+import ExploreScreen from "./play";
 import ProfileScreen from "./profile";
+import WalletScreen from "./wallet";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +26,8 @@ export default function TabsLayout() {
             style={{ backgroundColor: "#0F0F13" }}
             theme={{
               colors: {
-                secondaryContainer: "#1A1A22", // Active tab background
-                onSurfaceVariant: "#36F1CD40", // Ripple/highlight color with opacity
+                secondaryContainer: "#1A1A22",
+                onSurfaceVariant: "#36F1CD40",
               },
             }}
             onTabPress={({ route, preventDefault }) => {
@@ -77,13 +78,27 @@ export default function TabsLayout() {
           }}
         />
         <Tab.Screen
-          name="Explore"
+          name="Play"
           component={ExploreScreen}
           options={{
-            tabBarLabel: "Explore",
+            tabBarLabel: "Play",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="map-search"
+                name="gamepad-variant"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Wallet"
+          component={WalletScreen}
+          options={{
+            tabBarLabel: "Wallet",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="wallet-outline"
                 color={color}
                 size={26}
               />
