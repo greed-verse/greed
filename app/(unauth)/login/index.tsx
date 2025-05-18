@@ -7,6 +7,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -55,24 +56,91 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Gradient Background */}
-      <LinearGradient
-        colors={["#131320", "#0F0F13"]}
-        style={styles.backgroundGradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
       />
 
-      {/* Decorative Elements */}
-      <View style={styles.decorativeElements}>
-        <View style={styles.circle1} />
-        <View style={styles.circle2} />
-        <View style={styles.circle3} />
+      {/* Modern Gradient Background */}
+      <LinearGradient
+        colors={["#1A1A30", "#0F0F13"]}
+        style={styles.backgroundGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+      />
+
+      {/* Fun, Social Pattern Elements */}
+      <View style={styles.patternElements}>
+        {/* Floating elements that suggest social/party atmosphere */}
+        <View style={[styles.floatingElement, styles.elementTop1]}>
+          <MaterialCommunityIcons
+            name="cards"
+            size={24}
+            color="rgba(54, 241, 205, 0.4)"
+          />
+        </View>
+        <View style={[styles.floatingElement, styles.elementTop2]}>
+          <MaterialCommunityIcons
+            name="dice-multiple"
+            size={28}
+            color="rgba(123, 94, 167, 0.4)"
+          />
+        </View>
+        <View style={[styles.floatingElement, styles.elementLeft]}>
+          <MaterialCommunityIcons
+            name="cash"
+            size={22}
+            color="rgba(54, 241, 205, 0.4)"
+          />
+        </View>
+        <View style={[styles.floatingElement, styles.elementRight]}>
+          <MaterialCommunityIcons
+            name="trophy-outline"
+            size={26}
+            color="rgba(255, 209, 102, 0.4)"
+          />
+        </View>
+        <View style={[styles.floatingElement, styles.elementBottom1]}>
+          <MaterialCommunityIcons
+            name="account-group-outline"
+            size={26}
+            color="rgba(123, 94, 167, 0.4)"
+          />
+        </View>
+        <View style={[styles.floatingElement, styles.elementBottom2]}>
+          <MaterialCommunityIcons
+            name="party-popper"
+            size={24}
+            color="rgba(54, 241, 205, 0.4)"
+          />
+        </View>
+
+        {/* Subtle dots pattern */}
+        <View style={styles.dotsPattern}>
+          {Array.from({ length: 40 }).map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                {
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  opacity: 0.1 + Math.random() * 0.3,
+                  width: 2 + Math.random() * 3,
+                  height: 2 + Math.random() * 3,
+                },
+              ]}
+            />
+          ))}
+        </View>
+
+        {/* Highlight glow at top */}
         <LinearGradient
-          colors={["rgba(54, 241, 205, 0.1)", "rgba(54, 241, 205, 0)"]}
+          colors={["rgba(54, 241, 205, 0.15)", "rgba(54, 241, 205, 0)"]}
           style={styles.highlightGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 0.5 }}
         />
       </View>
 
@@ -90,7 +158,7 @@ export default function LoginScreen() {
                 resizeMode="contain"
               />
               <Text style={styles.appName}>Greed</Text>
-              <Text style={styles.tagline}>Risk it all. Win big.</Text>
+              <Text style={styles.tagline}>Play together. Win together.</Text>
             </View>
 
             {/* Social Login Options */}
@@ -163,7 +231,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 1,
   },
-  decorativeElements: {
+  patternElements: {
     position: "absolute",
     left: 0,
     right: 0,
@@ -172,49 +240,65 @@ const styles = StyleSheet.create({
     zIndex: 1,
     overflow: "hidden",
   },
-  circle1: {
+  floatingElement: {
     position: "absolute",
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    backgroundColor: "rgba(54, 241, 205, 0.03)",
-    top: -50,
-    right: -100,
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  circle2: {
-    position: "absolute",
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: "rgba(123, 94, 167, 0.04)",
-    bottom: 100,
-    left: -70,
+  elementTop1: {
+    top: "10%",
+    left: "20%",
   },
-  circle3: {
+  elementTop2: {
+    top: "15%",
+    right: "25%",
+  },
+  elementLeft: {
+    top: "45%",
+    left: "10%",
+  },
+  elementRight: {
+    top: "35%",
+    right: "15%",
+  },
+  elementBottom1: {
+    bottom: "20%",
+    left: "25%",
+  },
+  elementBottom2: {
+    bottom: "18%",
+    right: "20%",
+  },
+  dotsPattern: {
     position: "absolute",
-    width: 250,
-    height: 250,
-    borderRadius: 125,
-    backgroundColor: "rgba(54, 241, 205, 0.02)",
-    bottom: -50,
-    right: -50,
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+  dot: {
+    position: "absolute",
+    backgroundColor: "#36F1CD",
+    borderRadius: 10,
   },
   highlightGradient: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    height: 300,
+    height: 250,
   },
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: 100,
-    marginBottom: 60,
+    marginBottom: 25,
   },
   logo: {
-    width: 180,
-    height: 180,
+    width: 200,
+    height: 200,
   },
   appName: {
     color: theme.text,
@@ -236,14 +320,14 @@ const styles = StyleSheet.create({
   },
   socialLoginContainer: {
     paddingHorizontal: 24,
-    marginTop: 40,
+    marginTop: 30,
     marginBottom: 30,
   },
   socialButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(30, 30, 40, 0.8)",
+    backgroundColor: "rgba(30, 30, 40, 0.6)",
     borderRadius: 16,
     paddingVertical: 18,
     marginBottom: 16,

@@ -16,10 +16,8 @@ export default function RootLayout() {
     <PaperProvider>
       <StatusBar style="light" hidden={true} />
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(unauth)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="login" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
     </PaperProvider>
