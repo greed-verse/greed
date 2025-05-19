@@ -10,6 +10,23 @@ import WalletScreen from "./wallet";
 
 const Tab = createBottomTabNavigator();
 
+// Updated theme with red-based color scheme
+const theme = {
+  dark: "#1F1A20", // Slightly warmer dark background
+  surface: "#2A2329", // Warmer surface color with slight red tint
+  accent: "#FF5D73", // Warm coral/red as primary accent
+  accentLight: "#FF5D7333", // Coral with opacity
+  accentBright: "#FF7A8C", // Brighter coral for highlights
+  text: "#FFFFFF", // Keep white text
+  textSecondary: "#C5BBC0", // Warmer secondary text
+  cardBackground: "#2E272B", // Card background with red undertone
+  success: "#7ECFB3", // Teal-ish success color (less financial)
+  warning: "#FFC15E", // Warm amber warning
+  error: "#FF5D73", // Same as accent for consistency
+  info: "#86BBD8", // Soft blue info
+  purple: "#9D8CA1", // Muted purple for variety
+};
+
 export default function TabsLayout() {
   return (
     <Provider>
@@ -21,13 +38,22 @@ export default function TabsLayout() {
           <BottomNavigation.Bar
             navigationState={state}
             safeAreaInsets={insets}
-            inactiveColor="#A0A0B2"
-            activeColor="#36F1CD"
-            style={{ backgroundColor: "#0F0F13" }}
+            inactiveColor={theme.textSecondary} // Updated to use new secondary text color
+            activeColor={theme.accent} // Updated to use new accent color
+            style={{
+              backgroundColor: theme.dark, // Updated background
+              borderTopWidth: 1, // Added subtle top border
+              borderTopColor: "rgba(255,255,255,0.06)", // for a cleaner separation
+              elevation: 8, // Increased elevation for more depth
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: -3 },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+            }}
             theme={{
               colors: {
-                secondaryContainer: "#1A1A22",
-                onSurfaceVariant: "#36F1CD40",
+                secondaryContainer: theme.surface, // Updated for selected tab background
+                onSurfaceVariant: theme.accentLight, // Updated for icons
               },
             }}
             onTabPress={({ route, preventDefault }) => {
@@ -95,6 +121,7 @@ export default function TabsLayout() {
           name="Wallet"
           component={WalletScreen}
           options={{
+            // Consider changing this to "Points" to further de-emphasize money
             tabBarLabel: "Wallet",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons

@@ -13,19 +13,19 @@ import {
 import { Surface } from "react-native-paper";
 
 const theme = {
-  dark: "#0F0F13",
-  surface: "#1A1A22",
-  accent: "#36F1CD",
-  accentLight: "#36F1CD40",
-  accentBright: "#36F1CD",
-  text: "#FFFFFF",
-  textSecondary: "#A0A0B2",
-  cardBackground: "#1E1E28",
-  success: "#36F1CD",
-  warning: "#FFD166",
-  error: "#EF476F",
-  info: "#118AB2",
-  purple: "#7B5EA7",
+  dark: "#1F1A20", // Slightly warmer dark background
+  surface: "#2A2329", // Warmer surface color with slight red tint
+  accent: "#FF5D73", // Warm coral/red as primary accent
+  accentLight: "#FF5D7333", // Coral with opacity
+  accentBright: "#FF7A8C", // Brighter coral for highlights
+  text: "#FFFFFF", // Keep white text
+  textSecondary: "#C5BBC0", // Warmer secondary text
+  cardBackground: "#2E272B", // Card background with red undertone
+  success: "#7ECFB3", // Teal-ish success color (less financial)
+  warning: "#FFC15E", // Warm amber warning
+  error: "#FF5D73", // Same as accent for consistency
+  info: "#86BBD8", // Soft blue info
+  purple: "#9D8CA1", // Muted purple for variety
 };
 
 const presetAmounts = [10, 20, 50, 100];
@@ -403,7 +403,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#18181C",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
+    paddingVertical: 24,
+    paddingHorizontal: 24, // Increased horizontal padding
     alignItems: "center",
     minHeight: "80%",
   },

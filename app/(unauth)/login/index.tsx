@@ -15,21 +15,21 @@ import {
   View,
 } from "react-native";
 
-// Define theme colors to match existing app
+// Updated theme with red-based color scheme
 const theme = {
-  dark: "#0F0F13",
-  surface: "#1A1A22",
-  accent: "#36F1CD", // Primary green (more teal, modern)
-  accentLight: "#36F1CD40", // Light teal with opacity
-  accentBright: "#36F1CD", // Bright teal for highlights
-  text: "#FFFFFF",
-  textSecondary: "#A0A0B2",
-  cardBackground: "#1E1E28",
-  success: "#36F1CD",
-  warning: "#FFD166",
-  error: "#EF476F",
-  info: "#118AB2",
-  purple: "#7B5EA7",
+  dark: "#1F1A20", // Slightly warmer dark background
+  surface: "#2A2329", // Warmer surface color with slight red tint
+  accent: "#FF5D73", // Warm coral/red as primary accent
+  accentLight: "#FF5D7333", // Coral with opacity
+  accentBright: "#FF7A8C", // Brighter coral for highlights
+  text: "#FFFFFF", // Keep white text
+  textSecondary: "#C5BBC0", // Warmer secondary text
+  cardBackground: "#2E272B", // Card background with red undertone
+  success: "#7ECFB3", // Teal-ish success color (less financial)
+  warning: "#FFC15E", // Warm amber warning
+  error: "#FF5D73", // Same as accent for consistency
+  info: "#86BBD8", // Soft blue info
+  purple: "#9D8CA1", // Muted purple for variety
 };
 
 export default function LoginScreen() {
@@ -62,9 +62,9 @@ export default function LoginScreen() {
         translucent
       />
 
-      {/* Modern Gradient Background */}
+      {/* Updated Gradient Background with new colors */}
       <LinearGradient
-        colors={["#1A1A30", "#0F0F13"]}
+        colors={["#2D2326", theme.dark]}
         style={styles.backgroundGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
@@ -77,42 +77,42 @@ export default function LoginScreen() {
           <MaterialCommunityIcons
             name="cards"
             size={24}
-            color="rgba(54, 241, 205, 0.4)"
+            color="rgba(255, 93, 115, 0.4)" // Updated color to match new theme
           />
         </View>
         <View style={[styles.floatingElement, styles.elementTop2]}>
           <MaterialCommunityIcons
             name="dice-multiple"
             size={28}
-            color="rgba(123, 94, 167, 0.4)"
+            color="rgba(157, 140, 161, 0.4)" // Updated to theme.purple with opacity
           />
         </View>
         <View style={[styles.floatingElement, styles.elementLeft]}>
           <MaterialCommunityIcons
-            name="cash"
+            name="gamepad-variant" // Changed to a valid icon name for gaming
             size={22}
-            color="rgba(54, 241, 205, 0.4)"
+            color="rgba(255, 93, 115, 0.4)" // Updated color
           />
         </View>
         <View style={[styles.floatingElement, styles.elementRight]}>
           <MaterialCommunityIcons
             name="trophy-outline"
             size={26}
-            color="rgba(255, 209, 102, 0.4)"
+            color="rgba(255, 193, 94, 0.4)" // Updated to theme.warning with opacity
           />
         </View>
         <View style={[styles.floatingElement, styles.elementBottom1]}>
           <MaterialCommunityIcons
             name="account-group-outline"
             size={26}
-            color="rgba(123, 94, 167, 0.4)"
+            color="rgba(157, 140, 161, 0.4)" // Updated to theme.purple with opacity
           />
         </View>
         <View style={[styles.floatingElement, styles.elementBottom2]}>
           <MaterialCommunityIcons
             name="party-popper"
             size={24}
-            color="rgba(54, 241, 205, 0.4)"
+            color="rgba(255, 93, 115, 0.4)" // Updated color
           />
         </View>
 
@@ -135,9 +135,9 @@ export default function LoginScreen() {
           ))}
         </View>
 
-        {/* Highlight glow at top */}
+        {/* Highlight glow at top updated with new accent color */}
         <LinearGradient
-          colors={["rgba(54, 241, 205, 0.15)", "rgba(54, 241, 205, 0)"]}
+          colors={["rgba(255, 93, 115, 0.15)", "rgba(255, 93, 115, 0)"]}
           style={styles.highlightGradient}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 0.5 }}
@@ -153,7 +153,7 @@ export default function LoginScreen() {
             {/* Logo and App Name */}
             <View style={styles.logoContainer}>
               <Image
-                source={require("../../../assets/images/BlueClearLogo.png")}
+                source={require("../../../assets/images/GreedRedLogo.png")}
                 style={styles.logo}
                 resizeMode="contain"
               />
@@ -161,7 +161,7 @@ export default function LoginScreen() {
               <Text style={styles.tagline}>Play together. Win together.</Text>
             </View>
 
-            {/* Social Login Options */}
+            {/* Social Login Options - Updated with new theme colors */}
             <View style={styles.socialLoginContainer}>
               <TouchableOpacity
                 style={styles.socialButton}
@@ -190,7 +190,7 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Terms and Privacy */}
+            {/* Terms and Privacy - Updated text color */}
             <View style={styles.termsContainer}>
               <Text style={styles.termsText}>
                 By continuing, you agree to our{" "}
@@ -199,7 +199,7 @@ export default function LoginScreen() {
               </Text>
             </View>
 
-            {/* Sign Up Section */}
+            {/* Sign Up Section - Updated text color */}
             <View style={styles.signupContainer}>
               <Text style={styles.signupText}>No account?</Text>
               <TouchableOpacity>
@@ -216,7 +216,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0F0F13",
+    backgroundColor: theme.dark,
   },
   content: {
     flex: 1,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   },
   dot: {
     position: "absolute",
-    backgroundColor: "#36F1CD",
+    backgroundColor: theme.accent, // Updated dot color
     borderRadius: 10,
   },
   highlightGradient: {
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 1,
     marginTop: 10,
-    textShadowColor: "rgba(54, 241, 205, 0.4)",
+    textShadowColor: "rgba(255, 93, 115, 0.4)", // Updated text shadow color
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 15,
   },
@@ -327,12 +327,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(30, 30, 40, 0.6)",
+    backgroundColor: "rgba(46, 39, 43, 0.6)", // Updated with cardBackground with opacity
     borderRadius: 16,
     paddingVertical: 18,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "rgba(54, 241, 205, 0.3)",
+    borderColor: "rgba(255, 93, 115, 0.3)", // Updated border color
   },
   socialButtonText: {
     color: theme.text,
@@ -346,14 +346,14 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   termsText: {
-    color: theme.textSecondary,
+    color: theme.textSecondary, // Updated to new secondary text color
     fontSize: 14,
     textAlign: "center",
     lineHeight: 20,
     letterSpacing: 0.3,
   },
   termsLink: {
-    color: theme.accent,
+    color: theme.accent, // Updated to new accent color
     fontWeight: "500",
   },
   signupContainer: {
@@ -362,12 +362,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   signupText: {
-    color: theme.textSecondary,
+    color: theme.textSecondary, // Updated to new secondary text color
     fontSize: 16,
     letterSpacing: 0.5,
   },
   signupButton: {
-    color: theme.accent,
+    color: theme.accent, // Updated to new accent color
     fontSize: 16,
     fontWeight: "600",
     letterSpacing: 0.5,

@@ -16,19 +16,19 @@ import { ProgressBar, Surface } from "react-native-paper";
 
 // Using the same theme as the rest of the app
 const theme = {
-  dark: "#0F0F13",
-  surface: "#1A1A22",
-  accent: "#36F1CD", // Primary green (more teal, modern)
-  accentLight: "#36F1CD40", // Light teal with opacity
-  accentBright: "#36F1CD", // Bright teal for highlights
-  text: "#FFFFFF",
-  textSecondary: "#A0A0B2",
-  cardBackground: "#1E1E28",
-  success: "#36F1CD",
-  warning: "#FFD166",
-  error: "#EF476F",
-  info: "#118AB2",
-  purple: "#7B5EA7",
+  dark: "#1F1A20", // Slightly warmer dark background
+  surface: "#2A2329", // Warmer surface color with slight red tint
+  accent: "#FF5D73", // Warm coral/red as primary accent
+  accentLight: "#FF5D7333", // Coral with opacity
+  accentBright: "#FF7A8C", // Brighter coral for highlights
+  text: "#FFFFFF", // Keep white text
+  textSecondary: "#C5BBC0", // Warmer secondary text
+  cardBackground: "#2E272B", // Card background with red undertone
+  success: "#7ECFB3", // Teal-ish success color (less financial)
+  warning: "#FFC15E", // Warm amber warning
+  error: "#FF5D73", // Same as accent for consistency
+  info: "#86BBD8", // Soft blue info
+  purple: "#9D8CA1", // Muted purple for variety
 };
 
 // Mock user data
@@ -150,18 +150,17 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       {/* Modern Gradient Background similar to login screen */}
       <LinearGradient
-        colors={["#1A1A30", "#0F0F13"]}
+        colors={["#2D2326", theme.dark]}
         style={styles.backgroundGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       />
-
       {/* Highlight glow at top */}
       <LinearGradient
-        colors={["rgba(54, 241, 205, 0.10)", "rgba(54, 241, 205, 0)"]}
+        colors={["rgba(255, 93, 115, 0.15)", "rgba(255, 93, 115, 0)"]}
         style={styles.highlightGradient}
         start={{ x: 0.5, y: 0 }}
-        end={{ x: 0.5, y: 0.5 }}
+        end={{ x: 0.5, y: 0.6 }}
       />
 
       <ScrollView
