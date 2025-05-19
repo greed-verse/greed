@@ -1,7 +1,10 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
+
 import {
   Image,
   Keyboard,
@@ -14,6 +17,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+
+const BACKEND_URL = "http://localhost:8080";
 
 // Define theme colors to match existing app
 const theme = {
@@ -36,13 +41,22 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleGoogleLogin = () => {
-    setLoading(true);
-    // Mock login functionality
-    setTimeout(() => {
-      setLoading(false);
-      router.push("/(tabs)/home");
-    }, 1500);
+  const handleGoogleLogin = async () => {
+    const loginUrl = `${BACKEND_URL}/auth/google/login`;
+
+    const listener = Linking.addEventListener("url", async (event) => {
+      const url = event.url;
+      const tokenParam = Linking.parse(url).queryParams?.token;
+
+      if (tokenParam) {
+        const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
+        await AsyncStorage.setItem("jwt", token);
+        listener.remove();
+        router.push("/(tabs)/home");
+      }
+    });
+
+    await Linking.openURL(loginUrl);
   };
 
   const handleAppleLogin = () => {
