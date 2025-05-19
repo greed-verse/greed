@@ -1,8 +1,8 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useState } from "react";
-
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-
+import React, { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -13,19 +13,19 @@ import {
 import { ProgressBar, Surface } from "react-native-paper";
 
 const theme = {
-  dark: "#0F0F13",
-  surface: "#1A1A22",
-  accent: "#36F1CD",
-  accentLight: "#36F1CD40",
-  accentBright: "#36F1CD",
-  text: "#FFFFFF",
-  textSecondary: "#A0A0B2",
-  cardBackground: "#1E1E28",
-  success: "#36F1CD",
-  warning: "#FFD166",
-  error: "#EF476F",
-  info: "#118AB2",
-  purple: "#7B5EA7",
+  dark: "#1F1A20", // Slightly warmer dark background
+  surface: "#2A2329", // Warmer surface color with slight red tint
+  accent: "#FF5D73", // Warm coral/red as primary accent
+  accentLight: "#FF5D7333", // Coral with opacity
+  accentBright: "#FF7A8C", // Brighter coral for highlights
+  text: "#FFFFFF", // Keep white text
+  textSecondary: "#C5BBC0", // Warmer secondary text
+  cardBackground: "#2E272B", // Card background with red undertone
+  success: "#7ECFB3", // Teal-ish success color (less financial)
+  warning: "#FFC15E", // Warm amber warning
+  error: "#FF5D73", // Same as accent for consistency
+  info: "#86BBD8", // Soft blue info
+  purple: "#9D8CA1", // Muted purple for variety
 };
 
 type Achievement = {
@@ -78,33 +78,56 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <LinearGradient
+        colors={["#2D2326", theme.dark]}
+        style={styles.backgroundGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+      />
+      {/* Highlight glow at top */}
+      <LinearGradient
+        colors={["rgba(255, 93, 115, 0.15)", "rgba(255, 93, 115, 0)"]}
+        style={styles.highlightGradient}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 0.6 }}
+      />
       {/* Header with wallet info */}
 
       <View style={styles.headerContainer}>
-        <View style={styles.walletHeader}>
-          <View>
-            <Text style={styles.playerName}>Player One</Text>
+        <BlurView intensity={50} tint="dark" style={styles.headerBlur}>
+          <View style={styles.headerContent}>
+            <View style={styles.headerRow}>
+              <View style={styles.brandingContainer}>
+                <Text style={styles.brandName}>Greed</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.walletCard}
+                onPress={() => router.push("/(tabs)/wallet")}
+              >
+                <MaterialCommunityIcons
+                  name="wallet-outline"
+                  size={18}
+                  color={theme.text}
+                />
+                <Text style={styles.walletBalance}>
+                  {balance.toLocaleString()}
+                </Text>
+                <MaterialCommunityIcons
+                  name="plus-circle-outline"
+                  size={16}
+                  color={theme.accent}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.welcomeText}>Welcome back, Player One</Text>
           </View>
-          <TouchableOpacity
-            style={styles.walletCard}
-            onPress={() => router.push("/(tabs)/wallet")}
-          >
-            <MaterialCommunityIcons
-              name="wallet-outline"
-              size={18}
-              color={theme.text}
-            />
-            <Text style={styles.walletBalance}>{balance.toLocaleString()}</Text>
-            <MaterialCommunityIcons
-              name="plus-circle-outline"
-              size={16}
-              color={theme.accent}
-            />
-          </TouchableOpacity>
-        </View>
+        </BlurView>
       </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingTop: 110 }} // Adjust based on header height
+      >
         <Surface style={styles.balanceCard}>
           <View style={styles.balanceRow}>
             <View>
@@ -277,26 +300,66 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.dark,
   },
-  headerContainer: {
-    paddingTop: 60,
-    paddingBottom: 20,
-    paddingHorizontal: 24,
+  backgroundGradient: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
-  walletHeader: {
+  highlightGradient: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 250,
+  },
+  headerContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  headerBlur: {
+    width: "100%",
+    overflow: "hidden",
+  },
+  headerContent: {
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 24,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "rgba(255, 255, 255, 0.07)",
+  },
+  headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  playerName: {
+  brandingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  brandName: {
     color: theme.text,
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 26,
+    fontWeight: "800",
+    fontStyle: "italic",
     letterSpacing: 0.5,
+    opacity: 0.95,
+  },
+  welcomeText: {
+    color: theme.textSecondary,
+    fontSize: 15,
+    marginTop: 6,
+    fontWeight: "500",
+    letterSpacing: 0.3,
   },
   walletCard: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.05)",
+    backgroundColor: "rgba(255,255,255,0.04)",
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
