@@ -45,6 +45,7 @@ export default function LoginScreen() {
     const loginUrl = `${BACKEND_URL}/auth/google/login`;
 
     const listener = Linking.addEventListener("url", async (event) => {
+      console.log("Deep link received:", event.url);
       const url = event.url;
       const tokenParam = Linking.parse(url).queryParams?.token;
 
@@ -55,13 +56,15 @@ export default function LoginScreen() {
         router.push("/(tabs)/home");
       }
     });
-
-    await Linking.openURL(loginUrl);
+    try {
+      await Linking.openURL(loginUrl);
+    } catch (error) {
+      console.error("Failed to open Google auth URL:", error);
+    }
   };
 
   const handleAppleLogin = () => {
     setLoading(true);
-    // Mock login functionality
     setTimeout(() => {
       setLoading(false);
       router.push("/(tabs)/home");
@@ -130,7 +133,6 @@ export default function LoginScreen() {
           />
         </View>
 
-        {/* Subtle dots pattern */}
         <View style={styles.dotsPattern}>
           {Array.from({ length: 40 }).map((_, index) => (
             <View
@@ -149,7 +151,6 @@ export default function LoginScreen() {
           ))}
         </View>
 
-        {/* Highlight glow at top updated with new accent color */}
         <LinearGradient
           colors={["rgba(255, 93, 115, 0.15)", "rgba(255, 93, 115, 0)"]}
           style={styles.highlightGradient}
