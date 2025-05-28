@@ -9,7 +9,7 @@ export default function Index() {
       style={styles.button}
       onPress={() => router.push("/(unauth)/login")}
     >
-      <Text style={styles.buttonText}>Go to Home</Text>
+      <Text style={styles.buttonText}>Start app</Text>
     </TouchableOpacity>
   );
 }
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 8,
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 150,
   },
   buttonText: {
     color: "white",

@@ -232,10 +232,10 @@ export default function LoginScreen() {
                   AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
                 }
                 buttonStyle={
-                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+                  AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
                 }
-                cornerRadius={5}
-                style={styles.socialButton}
+                cornerRadius={16}
+                style={[{ height: 50 }]}
                 onPress={handleAppleLogin}
               />
             </View>
