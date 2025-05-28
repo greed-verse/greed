@@ -1,4 +1,6 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -45,13 +47,61 @@ export default function LoginScreen() {
     }, 1500);
   };
 
-  const handleAppleLogin = () => {
-    setLoading(true);
-    // Mock login functionality
-    setTimeout(() => {
+  const handleAppleLogin = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      setLoading(true);
+
+      const response = await fetch(
+        "https://8497-173-89-34-191.ngrok-free.app/auth/apple/verify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id_token: credential.identityToken }),
+        }
+      );
+
+      const data = await response.json();
+
+      // Add debugging logs
+      console.log("Full response data:", JSON.stringify(data, null, 2));
+      console.log("Response status:", response.status);
+      console.log("Data keys:", Object.keys(data));
+
+      if (data.user) {
+        console.log("User object:", JSON.stringify(data.user, null, 2));
+        console.log("User keys:", Object.keys(data.user));
+        console.log("first_login value:", data.user.first_login);
+        console.log("first_login type:", typeof data.user.first_login);
+      }
+
+      // Store the token and user data
+      await AsyncStorage.setItem("token", data.token);
+      await AsyncStorage.setItem("user", JSON.stringify(data.user));
+
+      console.log("User data:", data.user);
+      console.log("First login value:", data.user.first_login);
+
       setLoading(false);
-      router.push("/(tabs)/home");
-    }, 1500);
+
+      // Check if this is a first-time user
+      if (data.user && data.user.first_login === true) {
+        console.log("Navigating to onboarding");
+        router.push("/(unauth)/onboarding");
+      } else {
+        console.log("Navigating to home");
+        router.push("/(tabs)/home");
+      }
+    } catch (e) {
+      console.log("Error:", e);
+      setLoading(false);
+    }
   };
 
   return (
@@ -177,17 +227,17 @@ export default function LoginScreen() {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
+              <AppleAuthentication.AppleAuthenticationButton
+                buttonType={
+                  AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                }
+                buttonStyle={
+                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+                }
+                cornerRadius={5}
                 style={styles.socialButton}
                 onPress={handleAppleLogin}
-              >
-                <MaterialCommunityIcons
-                  name="apple"
-                  size={22}
-                  color={theme.text}
-                />
-                <Text style={styles.socialButtonText}>Continue with Apple</Text>
-              </TouchableOpacity>
+              />
             </View>
 
             {/* Terms and Privacy - Updated text color */}
@@ -278,6 +328,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
   },
+
   dot: {
     position: "absolute",
     backgroundColor: theme.accent, // Updated dot color

@@ -1,9 +1,23 @@
-import { Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-export default function ProfileScreen() {
+export default function PlayScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 24 }}>Profile Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Wallet</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+});

@@ -64,7 +64,7 @@ const achievements: Achievement[] = [
 ];
 
 export default function HomeScreen() {
-  const [balance, setBalance] = useState(5280);
+  const [balance, setBalance] = useState(120);
 
   const router = useRouter();
 
@@ -100,24 +100,16 @@ export default function HomeScreen() {
               <View style={styles.brandingContainer}>
                 <Text style={styles.brandName}>Greed</Text>
               </View>
-              <TouchableOpacity
-                style={styles.walletCard}
-                onPress={() => router.push("/(tabs)/wallet")}
-              >
+              <View style={styles.walletCard}>
                 <MaterialCommunityIcons
                   name="wallet-outline"
                   size={18}
                   color={theme.text}
                 />
                 <Text style={styles.walletBalance}>
-                  {balance.toLocaleString()}
+                  ${balance.toLocaleString()}
                 </Text>
-                <MaterialCommunityIcons
-                  name="plus-circle-outline"
-                  size={16}
-                  color={theme.accent}
-                />
-              </TouchableOpacity>
+              </View>
             </View>
             <Text style={styles.welcomeText}>Welcome back, Player One</Text>
           </View>
@@ -136,13 +128,11 @@ export default function HomeScreen() {
                 ${balance.toLocaleString()}
               </Text>
             </View>
-            <TouchableOpacity style={styles.topUpButton}>
-              <Text
-                onPress={() => router.push("/(unauth)/login")}
-                style={styles.topUpText}
-              >
-                Top Up
-              </Text>
+            <TouchableOpacity
+              style={styles.topUpButton}
+              onPress={() => router.push("/(unauth)/login")}
+            >
+              <Text style={styles.topUpText}>Add to Wallet</Text>
             </TouchableOpacity>
           </View>
         </Surface>
@@ -365,7 +355,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   walletBalance: {
-    color: theme.text,
+    color: theme.success,
     fontSize: 16,
     fontWeight: "500",
     marginHorizontal: 8,

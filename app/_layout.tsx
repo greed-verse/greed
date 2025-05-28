@@ -13,7 +13,6 @@ export default function RootLayout() {
 
   return (
     <PaperProvider>
-      <StatusBar style="light" hidden={true} />
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -21,6 +20,7 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
+        <StatusBar style="auto" />
       </ThemeProvider>
     </PaperProvider>
   );
