@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   presetBtnActive: {
-    backgroundColor: "#36F1CD22",
+    backgroundColor: theme.accentLight,
   },
   presetBtnText: {
     color: "#fff",
@@ -484,7 +484,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   presetBtnTextActive: {
-    color: "#36F1CD",
+    color: theme.accent,
   },
   keypad: {
     width: "100%",

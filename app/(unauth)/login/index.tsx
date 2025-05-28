@@ -1,9 +1,12 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as AppleAuthentication from "expo-apple-authentication";
+
 import { LinearGradient } from "expo-linear-gradient";
+import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
+
 import {
   Image,
   Keyboard,
@@ -17,7 +20,9 @@ import {
   View,
 } from "react-native";
 
-// Updated theme with red-based color scheme
+const BACKEND_URL = "http://localhost:8080";
+
+// Define theme colors to match existing app
 const theme = {
   dark: "#1F1A20", // Slightly warmer dark background
   surface: "#2A2329", // Warmer surface color with slight red tint
@@ -38,13 +43,26 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleGoogleLogin = () => {
-    setLoading(true);
-    // Mock login functionality
-    setTimeout(() => {
-      setLoading(false);
-      router.push("/(tabs)/home");
-    }, 1500);
+  const handleGoogleLogin = async () => {
+    const loginUrl = `${BACKEND_URL}/auth/google/login`;
+
+    const listener = Linking.addEventListener("url", async (event) => {
+      console.log("Deep link received:", event.url);
+      const url = event.url;
+      const tokenParam = Linking.parse(url).queryParams?.token;
+
+      if (tokenParam) {
+        const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
+        await AsyncStorage.setItem("jwt", token);
+        listener.remove();
+        router.push("/(tabs)/home");
+      }
+    });
+    try {
+      await Linking.openURL(loginUrl);
+    } catch (error) {
+      console.error("Failed to open Google auth URL:", error);
+    }
   };
 
   const handleAppleLogin = async () => {
@@ -166,7 +184,6 @@ export default function LoginScreen() {
           />
         </View>
 
-        {/* Subtle dots pattern */}
         <View style={styles.dotsPattern}>
           {Array.from({ length: 40 }).map((_, index) => (
             <View
@@ -185,7 +202,6 @@ export default function LoginScreen() {
           ))}
         </View>
 
-        {/* Highlight glow at top updated with new accent color */}
         <LinearGradient
           colors={["rgba(255, 93, 115, 0.15)", "rgba(255, 93, 115, 0)"]}
           style={styles.highlightGradient}
