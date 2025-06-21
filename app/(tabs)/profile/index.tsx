@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingTop: 60,
+    paddingTop: 90,
     paddingHorizontal: 24,
   },
   profileHeader: {

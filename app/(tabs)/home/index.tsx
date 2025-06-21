@@ -1,5 +1,4 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -93,32 +92,10 @@ export default function HomeScreen() {
       />
       {/* Header with wallet info */}
 
-      <View style={styles.headerContainer}>
-        <BlurView intensity={50} tint="dark" style={styles.headerBlur}>
-          <View style={styles.headerContent}>
-            <View style={styles.headerRow}>
-              <View style={styles.brandingContainer}>
-                <Text style={styles.brandName}>Greed</Text>
-              </View>
-              <View style={styles.walletCard}>
-                <MaterialCommunityIcons
-                  name="wallet-outline"
-                  size={18}
-                  color={theme.text}
-                />
-                <Text style={styles.walletBalance}>
-                  ${balance.toLocaleString()}
-                </Text>
-              </View>
-            </View>
-            <Text style={styles.welcomeText}>Welcome back, Player One</Text>
-          </View>
-        </BlurView>
-      </View>
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: 110 }} // Adjust based on header height
+        contentContainerStyle={{ paddingTop: 100 }} // Adjust based on header height
       >
         <Surface style={styles.balanceCard}>
           <View style={styles.balanceRow}>
@@ -345,21 +322,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: "500",
     letterSpacing: 0.3,
-  },
-  walletCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.04)",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  walletBalance: {
-    color: theme.success,
-    fontSize: 16,
-    fontWeight: "500",
-    marginHorizontal: 8,
-    letterSpacing: 0.5,
   },
   content: {
     flex: 1,

@@ -1,6 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
+const theme = {
+  dark: "#1F1A20",
+};
+
 export default function PlayScreen() {
   return <View style={styles.container} />;
 }
@@ -8,6 +12,7 @@ export default function PlayScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: theme.dark,
+    paddingTop: 80,
   },
 });
