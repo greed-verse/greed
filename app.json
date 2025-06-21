@@ -34,6 +34,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-dev-client",
       [
         "expo-splash-screen",
         {
@@ -42,7 +43,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#0F0F13"
         }
-      ]
+      ],
+      "@azesmway/react-native-unity"
     ],
     "experiments": {
       "typedRoutes": true
