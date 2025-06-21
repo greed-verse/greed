@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.ParksApp",
+      "bundleIdentifier": "com.anonymous.Greed",
       "statusBar": {
         "hidden": true
       }
