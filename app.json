@@ -4,7 +4,7 @@
     "slug": "GREED",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/GreedLogoWhite.png",
+    "icon": "./assets/images/GreedLogo.png",
     "scheme": "greed",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

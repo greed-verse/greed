@@ -1,6 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = "https://8497-173-89-34-191.ngrok-free.app"; // Replace with your actual URL
+const API_BASE_URL = "http://localhost:8080";
+
+export interface User {
+  id: number;
+  email: string;
+  name: string;
+  first_login: boolean;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
 
 export const getAuthToken = async (): Promise<string | null> => {
   try {
@@ -11,7 +23,7 @@ export const getAuthToken = async (): Promise<string | null> => {
   }
 };
 
-export const getUserData = async () => {
+export const getUserData = async (): Promise<User | null> => {
   try {
     const userData = await AsyncStorage.getItem("user");
     return userData ? JSON.parse(userData) : null;
@@ -33,32 +45,62 @@ export const getUserId = async (): Promise<number | null> => {
 
 export const completeOnboarding = async (userId: number): Promise<boolean> => {
   try {
-    console.log(`Making request to: ${API_BASE_URL}/user/complete-onboarding`);
-    console.log("Request body:", JSON.stringify({ userId }));
+    const token = await getAuthToken();
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
 
     const response = await fetch(`${API_BASE_URL}/user/complete-onboarding`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true", // Add this for ngrok
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ userId }),
     });
 
-    console.log("Response status:", response.status);
-    console.log("Response headers:", response.headers);
-
     if (!response.ok) {
       const errorText = await response.text();
-      console.log("Error response body:", errorText);
       throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
-    console.log("Success response:", data);
     return data.success === true;
   } catch (error) {
     console.error("Error completing onboarding:", error);
     throw error;
+  }
+};
+
+export const getUserStats = async (userId: number): Promise<any> => {
+  try {
+    const token = await getAuthToken();
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/user/${userId}/stats`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error getting user stats:", error);
+    throw error;
+  }
+};
+
+export const logout = async (): Promise<void> => {
+  try {
+    await AsyncStorage.multiRemove(["token", "user"]);
+  } catch (error) {
+    console.error("Error during logout:", error);
   }
 };

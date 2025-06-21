@@ -1,13 +1,11 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as AppleAuthentication from "expo-apple-authentication";
-
 import { LinearGradient } from "expo-linear-gradient";
-import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -43,30 +41,10 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleGoogleLogin = async () => {
-    const loginUrl = `${BACKEND_URL}/auth/google/login`;
-
-    const listener = Linking.addEventListener("url", async (event) => {
-      console.log("Deep link received:", event.url);
-      const url = event.url;
-      const tokenParam = Linking.parse(url).queryParams?.token;
-
-      if (tokenParam) {
-        const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
-        await AsyncStorage.setItem("jwt", token);
-        listener.remove();
-        router.push("/(tabs)/home");
-      }
-    });
-    try {
-      await Linking.openURL(loginUrl);
-    } catch (error) {
-      console.error("Failed to open Google auth URL:", error);
-    }
-  };
-
   const handleAppleLogin = async () => {
     try {
+      setLoading(true);
+
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -74,51 +52,51 @@ export default function LoginScreen() {
         ],
       });
 
-      setLoading(true);
+      console.log("Apple credential received:", credential);
 
-      const response = await fetch(
-        "https://8497-173-89-34-191.ngrok-free.app/auth/apple/verify",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id_token: credential.identityToken }),
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/auth/apple/verify`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_token: credential.identityToken,
+        }),
+      });
 
-      const data = await response.json();
-
-      // Add debugging logs
-      console.log("Full response data:", JSON.stringify(data, null, 2));
-      console.log("Response status:", response.status);
-      console.log("Data keys:", Object.keys(data));
-
-      if (data.user) {
-        console.log("User object:", JSON.stringify(data.user, null, 2));
-        console.log("User keys:", Object.keys(data.user));
-        console.log("first_login value:", data.user.first_login);
-        console.log("first_login type:", typeof data.user.first_login);
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Authentication failed: ${errorData}`);
       }
 
-      // Store the token and user data
+      const data = await response.json();
+      console.log("Backend response:", data);
+
       await AsyncStorage.setItem("token", data.token);
       await AsyncStorage.setItem("user", JSON.stringify(data.user));
 
-      console.log("User data:", data.user);
-      console.log("First login value:", data.user.first_login);
-
       setLoading(false);
 
-      // Check if this is a first-time user
       if (data.user && data.user.first_login === true) {
-        console.log("Navigating to onboarding");
-        router.push("/(unauth)/onboarding");
+        console.log("First time user - navigating to onboarding");
+        router.replace("/(unauth)/onboarding");
       } else {
-        console.log("Navigating to home");
-        router.push("/(tabs)/home");
+        console.log("Existing user - navigating to home");
+        router.replace("/(tabs)/home");
       }
-    } catch (e) {
-      console.log("Error:", e);
+    } catch (error) {
+      console.error("Apple Sign-In Error:", error);
       setLoading(false);
+
+      if ((error as any).code === "ERR_CANCELED") {
+        return;
+      }
+
+      Alert.alert(
+        "Authentication Failed",
+        (error as Error).message || "Unable to sign in. Please try again.",
+        [{ text: "OK" }]
+      );
     }
   };
 
@@ -229,20 +207,6 @@ export default function LoginScreen() {
 
             {/* Social Login Options - Updated with new theme colors */}
             <View style={styles.socialLoginContainer}>
-              <TouchableOpacity
-                style={styles.socialButton}
-                onPress={handleGoogleLogin}
-              >
-                <MaterialCommunityIcons
-                  name="google"
-                  size={22}
-                  color={theme.text}
-                />
-                <Text style={styles.socialButtonText}>
-                  Continue with Google
-                </Text>
-              </TouchableOpacity>
-
               <AppleAuthentication.AppleAuthenticationButton
                 buttonType={
                   AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
@@ -251,9 +215,13 @@ export default function LoginScreen() {
                   AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
                 }
                 cornerRadius={16}
-                style={[{ height: 50 }]}
+                style={styles.appleButton}
                 onPress={handleAppleLogin}
               />
+
+              {loading && (
+                <Text style={styles.loadingText}>Authenticating...</Text>
+              )}
             </View>
 
             {/* Terms and Privacy - Updated text color */}
@@ -389,24 +357,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginTop: 30,
     marginBottom: 30,
-  },
-  socialButton: {
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(46, 39, 43, 0.6)", // Updated with cardBackground with opacity
-    borderRadius: 16,
-    paddingVertical: 18,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "rgba(255, 93, 115, 0.3)", // Updated border color
   },
-  socialButtonText: {
+  appleButton: {
+    width: "100%",
+    height: 50,
+  },
+  loadingText: {
     color: theme.text,
-    fontSize: 16,
-    fontWeight: "600",
-    marginLeft: 12,
-    letterSpacing: 0.5,
+    fontSize: 14,
+    marginTop: 16,
+    opacity: 0.7,
   },
   termsContainer: {
     paddingHorizontal: 40,

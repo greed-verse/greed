@@ -1,12 +1,6 @@
-import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { Redirect } from "expo-router";
+import React from "react";
 
 export default function Index() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/(unauth)/login");
-  }, []);
-
-  return null;
+  return <Redirect href="/(unauth)/login" />;
 }
